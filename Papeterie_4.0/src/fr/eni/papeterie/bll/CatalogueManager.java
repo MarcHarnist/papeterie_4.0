@@ -1,18 +1,17 @@
 package fr.eni.papeterie.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.papeterie.bo.Article;
-import fr.eni.papeterie.bo.Catalogue;
 import fr.eni.papeterie.dal.ArticleDAO;
+import fr.eni.papeterie.dal.DALException;
+import fr.eni.papeterie.dal.DAOFactory;
 
 public class CatalogueManager {
 	
-	
 	//Attributs
-	
-	private ArticleDAO daoArticle;
-	private List<Article> catalogue;
+	private ArticleDAO daoArticle = DAOFactory.getArticleDAO();
 	
 	/**
 	 * Constructeur
@@ -26,15 +25,16 @@ public class CatalogueManager {
 	}
 	/**
 	 * @return the catalogue qui est une liste d'articles
+	 * @throws DALException 
 	 */
-	public List<Article> getCatalogue() {
+	public List<Article> getCatalogue() throws DALException {
 		
-		return this.catalogue;
+		return this.daoArticle.selectAll();
 	}
 
-	public void addArticle(Article article) throws BLLException
+	public void addArticle(Article article) throws BLLException, DALException
 	{
-		this.catalogue.add(article);
+		this.daoArticle.insert(article);
 	}
 	public void updateArticle(Article a) throws BLLException {
 		

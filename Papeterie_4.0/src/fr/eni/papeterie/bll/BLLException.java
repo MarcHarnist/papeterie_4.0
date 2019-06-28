@@ -6,6 +6,7 @@ package fr.eni.papeterie.bll;
  * BLL: Business Logic Layer
  *
  */
+@SuppressWarnings("serial")
 public class BLLException extends Exception {
 	
 	//Constructeurs

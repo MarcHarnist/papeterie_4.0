@@ -6,10 +6,12 @@ import java.util.List;
 import fr.eni.papeterie.bo.Article;
 import fr.eni.papeterie.bo.Ramette;
 import fr.eni.papeterie.bo.Stylo;
+import fr.eni.papeterie.dal.DALException;
 
 public class AppliTestBLL {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws DALException {
+	
 		// Instanciation du jeu d'essai
 		List<Article> articles = new ArrayList<>();
 		Stylo stylo = new Stylo("Bic", "BBOrange", "Bic bille Orange", 1.2f, 20, "bleu");
