@@ -1,6 +1,5 @@
 package fr.eni.papeterie.bll;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.papeterie.bo.Article;
@@ -49,10 +48,6 @@ public class CatalogueManager {
 		Article article = null;
 		return article;
 		
-	}
-
-	public ArticleDAO getDaoArticle() {
-		return daoArticle;
 	}
 	
 	public void setDaoArticle(ArticleDAO daoArticle) {
