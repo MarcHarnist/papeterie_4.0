@@ -39,7 +39,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	private static final String SQL_SELECT_ALL = "select idArticle, reference, marque, designation, "
-			+ "prixUnitaire, qteStock, grammage, couleur, type from Articles order by reference, idArticle";
+			+ "prixUnitaire, qteStock, grammage, couleur, type from Articles order by idArticle";
 	
 	private static final String SQL_DELETE = "DELETE from Articles where idArticle=?";
 	

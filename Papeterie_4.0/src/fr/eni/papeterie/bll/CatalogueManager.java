@@ -11,87 +11,127 @@ import fr.eni.papeterie.dal.DAOFactory;
 
 public class CatalogueManager {
 	
-	//Attributs
-	private ArticleDAO daoArticle = DAOFactory.getArticleDAO();
+	private ArticleDAO daoArticle;
 	
-	/**
-	 * Constructeur
-	 * @param daoArticle : lien vers la dao (data access objet)
-	 */
-	public CatalogueManager(ArticleDAO daoArticle) {
-		this.setDaoArticle(daoArticle);
-	}
 	public CatalogueManager() {
-		// TODO Auto-generated constructor stub
+		daoArticle = DAOFactory.getArticleDAO();
 	}
-	/**
-	 * @return the catalogue qui est une liste d'articles
-	 * @throws BLLException 
-	 * @throws DALException 
-	 */
-	public List<Article> getCatalogue() throws BLLException {
+	
+	
+	public List<Article> getCatalogue() throws BLLException{
+		List<Article> listeArticle = null;
+		try {
+			listeArticle = daoArticle.selectAll();
+		} catch (DALException e) {
+			throw new BLLException("Erreur recuperation catalogue", e);
+		}
+		return listeArticle;
+	}
+	
+	public void addArticle(Article a) throws BLLException{
+		if(a.getIdArticle()!=null) {
+			throw new BLLException("Article déjà existant");
+		}		
 		
 		try {
-			return this.daoArticle.selectAll();
+			validerArticle(a);
+			daoArticle.insert(a);
 		} catch (DALException e) {
-			throw new BLLException(" Erreur récupération catalogue ", e);
+			throw new BLLException("Erreur de création d'aticle", e);
 		}
-	}
-
-	public void addArticle(Article article) throws BLLException, DALException
-	{
-		this.daoArticle.insert(article);
-	}
-	public void updateArticle(Article a) throws BLLException {
-		
-		
-	}
-	public void removeArticle(int index) throws BLLException {
-		
-	}
-	public void validerArticle(Article a) throws BLLException {
-		
-		boolean valid = true;
-		StringBuilder sb = new StringBuilder();
-		
-		if(a == null) {
-			valid = false;
-			throw new BLLException("\n\tArticle null.\n");
-		}
-		if(a.getReference() == null || a.getReference().trim().isEmpty()) {
-			sb.append(" La référence article est obligatoire");
-			valid = false;
-		}
-		if(a.getMarque() == null || a.getMarque().trim().isEmpty()) {
-			valid = false;
-		}
-		if(a.getDesignation() == null || a.getDesignation().trim().isEmpty()) {
-			sb.append(" La désignation est obligatoire");
-			valid = false;
-		}
-		if(a instanceof Ramette && ((Ramette) a).getGrammage() <= 0)
-		{
-			sb.append("Le grammage doir avoir une valeur strictement positive.\n");
-			valid = false;
-		}
-		if(a instanceof Stylo && ((Stylo) a).getCouleur().trim().isEmpty())
-		{
-			sb.append("La couleur du stylo doit être renseignée.\n");
-			valid = false;
-		}
-		if(!valid)
-		{
-			throw new BLLException(sb.toString());
-		}
-	}
-	public Article getArticle(int index) throws BLLException {
-		
-		Article article = null;
-		return article;
 		
 	}
 	
-	public void setDaoArticle(ArticleDAO daoArticle) {
-		this.daoArticle = daoArticle;
+	public void updateArticle(Article a) throws BLLException{
+		
+		try {
+			validerArticle(a);
+			daoArticle.update(a);
+		} catch (DALException e) {
+			throw new BLLException("Erreur de l'update article " + a, e);
+		}
+		
 	}
+	
+
+	public void removeArticle(int index) throws BLLException{
+		
+		try {
+			daoArticle.delete(index);
+		} catch (DALException e) {
+			throw new BLLException("Erreur de la suppression de l'article id - " + index, e);
+		}
+		
+	}
+	
+	public void validerArticle(Article a) throws BLLException{
+		boolean valide = true;
+		StringBuilder sb = new StringBuilder();
+		
+		if(a==null) {
+			throw new BLLException("Article null");
+		}
+		
+		if(a.getReference()==null || a.getReference().trim().isEmpty()) {
+			sb.append("La reference article est obligatoire.\n");
+			valide = false;
+			
+		}
+		
+		if(a.getMarque()==null || a.getMarque().trim().isEmpty()) {
+			sb.append("La marque est obligatoire.\n");
+			valide = false;
+		}
+		
+		if(a.getDesignation()==null || a.getDesignation().trim().isEmpty()) {
+			sb.append("La designation est obligatoire.\n");
+			valide = false;
+		}
+		
+		if(a.getQteStock()<0) {
+			sb.append("La quantité en stock doit être positive.\n");
+			valide = false;
+		}
+		
+		if(a instanceof Ramette && ((Ramette) a).getGrammage()<=0) {
+			sb.append("Le grammage doit avoir une valeur strictement positive.\n");
+			valide = false;
+		}
+		
+		if(a instanceof Stylo && ((Stylo) a).getCouleur().trim().isEmpty()) {
+			sb.append("La couleur pour un stylo est obligatoire.\n");
+			valide = false;
+		}
+		
+		if(!valide) {
+			throw new BLLException(sb.toString());
+		}
+
+	}
+	
+	
+	
+	public Article getArticle(int index) throws BLLException{
+		Article art = null;
+		
+		try {
+			art = daoArticle.selectById(index);
+		} catch (DALException e) {
+			throw new BLLException("Erreur de la lecture de l'article - id : " + index, e);
+		}
+		
+		return art;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
