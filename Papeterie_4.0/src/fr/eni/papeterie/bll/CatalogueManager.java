@@ -44,8 +44,9 @@ public class CatalogueManager {
 	public void validerArticle(Article a) throws BLLException {
 		
 	}
-	public Article getArticle(int index) throws BLLException {
-		Article article = null;
+	public Article getArticle(int index) throws BLLException, DALException {
+		Article article = daoArticle.selectById(index);
+		
 		return article;
 		
 	}

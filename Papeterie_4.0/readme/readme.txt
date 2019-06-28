@@ -12,14 +12,10 @@ Durée estimée
 
 	En cours
 	o ajouter un article au catalogue 
-	
-	
-	
-	
-	
-		
-	Reste à faire
 	o lister tous les articles du catalogue 
+
+	Reste à faire
+	
 	o récupérer un article en connaissant son identifiant 
 	o modifier les caractéristiques d’un article o supprimer un article 
 	• Les contraintes suivantes devront être vérifiées : 

@@ -10,7 +10,7 @@ import fr.eni.papeterie.dal.DALException;
 
 public class AppliTestBLL {
 
-	public static void main(String[] args) throws DALException {
+	public static void main(String[] args) throws DALException, BLLException {
 	
 		// Instanciation du jeu d'essai
 		List<Article> articles = new ArrayList<>();
@@ -28,6 +28,7 @@ public class AppliTestBLL {
 			for (Article art : articles) {
 				mger.addArticle(art);
 			}
+			System.out.println("\n/**\n* - Lister tous les articles du catalogue\n*/ ");
 			System.out.println(mger.getCatalogue());
 
 		} catch (BLLException e) {
@@ -40,19 +41,29 @@ public class AppliTestBLL {
 			((Stylo) stylo).setDesignation("Bic bille noir");
 			((Stylo) stylo).setReference("BBNoir");
 			mger.updateArticle(stylo);
-			System.out.println("Article après modification  : " + stylo.toString());
+			System.out.println("\n/**  Article après modification  : " + stylo.toString());
+			System.out.println("*");
+			System.out.println("*/");
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
 
 		// Suppression d'un article
 		try {
+			System.out.println("\n/**\n* - Suppression de du stylo " + stylo.getReference()+ "\n*/ ");
 			mger.removeArticle(stylo.getIdArticle());
+			System.out.println("\n/**\n* - Lister tous les articles du catalogue\n*/ ");
 			System.out.println(mger.getCatalogue());
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// Récupération d'un article en connaissant son identifiant
+		System.out.println("\n/**\n* - Récupération d'un article en connaissant son identifiant\n*/ ");
+		System.out.println(mger.getArticle(1));
+		
+		
 	}
 
 }
