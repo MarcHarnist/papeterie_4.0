@@ -10,15 +10,7 @@ Durée estimée
 • La couche BLL doit fournir les services suivant :
 
 
-	En cours
 	o ajouter un article au catalogue 
-	
-	
-	
-	
-	
-		
-	Reste à faire
 	o lister tous les articles du catalogue 
 	o récupérer un article en connaissant son identifiant 
 	o modifier les caractéristiques d’un article o supprimer un article 
